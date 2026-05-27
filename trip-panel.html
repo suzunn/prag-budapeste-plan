@@ -163,6 +163,20 @@
       font-size: 13px;
     }
 
+    .place-link {
+      color: var(--accent);
+      font-weight: 800;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(40, 63, 143, .32);
+    }
+
+    .mini-info {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
     .budget-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -425,14 +439,14 @@
         <article class="plan-card">
           <h2>28 Mayis Persembe - 10:20 varis, 14:00 check-in</h2>
           <ul class="route-list">
-            <li><span class="time">10:20</span><span>Prag varis. Direkt <strong>Hlavni nadrazi</strong> bagaj deposuna gecin; evinize de cok yakin oldugu icin en az surtunmeli cozum bu.</span></li>
+            <li><span class="time">10:20</span><span>Prag varis. Direkt <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Praha%20hlavni%20nadrazi%20luggage%20storage" target="_blank" rel="noreferrer">Hlavni nadrazi</a> bagaj deposuna gecin; evinize de cok yakin oldugu icin en az surtunmeli cozum bu.<span class="mini-info">Prag'in ana tren istasyonu; eski Fantova binasi ve modern terminal ayni kompleks icinde.</span></span></li>
             <li><span class="time">10:50</span><span>Cantalari birakin. Resmi normal bagaj deposu 06:00-23:00; self servis kutular icin sizdeki bilgiye gore 03:30-00:30. Ortalama 100 CZK / 24 saat mantikli varsayim.</span></li>
             <li><span class="time">11:15</span><span>Kahve + hafif kahvalti: Masarycka / Jindrisska civarinda kruvasan-kahve. Kisi basi 180-280 CZK.</span></li>
-            <li><span class="time">12:15</span><span>Oglen yemegi: <strong>Kantyna</strong> cok iyi ve eve yakin. Daha klasik oturma isterseniz <strong>Cafe Louvre</strong>. Kisi basi 300-500 CZK.</span></li>
-            <li><span class="time">13:40</span><span>Hlavni nadrazi'den cantalari alip eve yuruyun. 14:00 check-in.</span></li>
-            <li><span class="time">15:15</span><span>Wenceslas Square -> Powder Tower -> Old Town Square -> Astronomical Clock yuruyusu.</span></li>
-            <li><span class="time">17:45</span><span>Charles Bridge ve Kampa tarafina gecis. Kopruyu gunduz gorup gece tekrar donmek iyi olur.</span></li>
-            <li><span class="time">20:00</span><span>Aksam: <strong>Lokal Dlouha</strong>. Gulas/svickova + tank beer. Iki kisi 900-1,300 CZK.</span></li>
+            <li><span class="time">12:15</span><span>Oglen yemegi: <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Kantyna%20Prague" target="_blank" rel="noreferrer">Kantyna</a> cok iyi ve eve yakin. Daha klasik oturma isterseniz <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Cafe%20Louvre%20Prague" target="_blank" rel="noreferrer">Cafe Louvre</a>. Kisi basi 300-500 CZK.<span class="mini-info">Kantyna modern et/lokal yemek tarzi; Cafe Louvre ise 1902'den beri acik klasik Prag kafesi.</span></span></li>
+            <li><span class="time">13:40</span><span><a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Praha%20hlavni%20nadrazi%20luggage%20storage" target="_blank" rel="noreferrer">Hlavni nadrazi</a>'den cantalari alip eve yuruyun. 14:00 check-in.</span></li>
+            <li><span class="time">15:15</span><span><a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Wenceslas%20Square%20Prague" target="_blank" rel="noreferrer">Wenceslas Square</a> -> <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Powder%20Tower%20Prague" target="_blank" rel="noreferrer">Powder Tower</a> -> <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Old%20Town%20Square%20Prague" target="_blank" rel="noreferrer">Old Town Square</a> -> <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Prague%20Astronomical%20Clock" target="_blank" rel="noreferrer">Astronomical Clock</a> yuruyusu.<span class="mini-info">Orloj 1410'dan kalma; dunyanin calisan en eski astronomik saatlerinden biri.</span></span></li>
+            <li><span class="time">17:45</span><span><a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Charles%20Bridge%20Prague" target="_blank" rel="noreferrer">Charles Bridge</a> ve <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Kampa%20Island%20Prague" target="_blank" rel="noreferrer">Kampa</a> tarafina gecis. Kopruyu gunduz gorup gece tekrar donmek iyi olur.<span class="mini-info">Charles Bridge 14. yuzyilda yapildi; eski kraliyet yolunun en ikonik parcasi.</span></span></li>
+            <li><span class="time">20:00</span><span>Aksam: <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Lokal%20Dlouha%20Prague" target="_blank" rel="noreferrer">Lokal Dlouha</a>. Gulas/svickova + tank beer. Iki kisi 900-1,300 CZK.<span class="mini-info">Tank beer ve klasik Cek pub yemegi icin guvenli secim.</span></span></li>
           </ul>
           <p class="plan-note">Eve daha yakin teorik app bazli depolar olabilir, ama acilis-kapanis ve guvenilirlik degisken. Hlavni nadrazi hem varis aksinda hem eve cok yakin oldugu icin benim secimim bu.</p>
         </article>
@@ -440,12 +454,12 @@
         <article class="plan-card">
           <h2>29 Mayis Cuma - Kale, Mala Strana, manzara</h2>
           <ul class="route-list">
-            <li><span class="time">08:30</span><span>Kahvalti: <strong>Prokop Coffee & Croissants</strong> veya TikTok ekstra olarak <strong>Cafe Savoy</strong>. Savoy icin rezervasyon/kuyruk riski var; kisi basi 300-600 CZK.</span></li>
-            <li><span class="time">09:30</span><span>Tram/metro ile Prague Castle. Kale ana devre bileti kisi basi 450 CZK.</span></li>
+            <li><span class="time">08:30</span><span>Kahvalti: <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Prokop%20Coffee%20%26%20Croissants%20Prague" target="_blank" rel="noreferrer">Prokop Coffee & Croissants</a> veya TikTok ekstra olarak <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Cafe%20Savoy%20Prague" target="_blank" rel="noreferrer">Cafe Savoy</a>. Savoy icin rezervasyon/kuyruk riski var; kisi basi 300-600 CZK.<span class="mini-info">Cafe Savoy tarihi tavanlari ve kahvalti tabaklariyla meshur.</span></span></li>
+            <li><span class="time">09:30</span><span>Tram/metro ile <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Prague%20Castle" target="_blank" rel="noreferrer">Prague Castle</a>. Kale ana devre bileti kisi basi 450 CZK.<span class="mini-info">Dunyanin en buyuk antik kale komplekslerinden biri; St. Vitus'u basta gezin.</span></span></li>
             <li><span class="time">12:45</span><span>Oglen: kale yakininda hafif yemek; turistik meydanda agir restorana oturmayin. Kisi basi 250-400 CZK.</span></li>
-            <li><span class="time">14:00</span><span>St. Vitus -> Golden Lane -> Mala Strana inisi -> TikTok ekstra <strong>Vrtba Garden</strong> -> Lennon Wall -> Kampa.</span></li>
-            <li><span class="time">17:30</span><span>Old Town Bridge Tower opsiyonel. Kisi basi 250 CZK; hava aciksa deger.</span></li>
-            <li><span class="time">20:00</span><span>Aksam: <strong>U Glaubicu</strong> veya <strong>Mincovna</strong> alternatifi. Iki kisi 1,100-1,700 CZK.</span></li>
+            <li><span class="time">14:00</span><span><a class="place-link" href="https://www.google.com/maps/search/?api=1&query=St.%20Vitus%20Cathedral%20Prague" target="_blank" rel="noreferrer">St. Vitus</a> -> <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Golden%20Lane%20Prague" target="_blank" rel="noreferrer">Golden Lane</a> -> Mala Strana inisi -> TikTok ekstra <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Vrtba%20Garden%20Prague" target="_blank" rel="noreferrer">Vrtba Garden</a> -> <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Lennon%20Wall%20Prague" target="_blank" rel="noreferrer">Lennon Wall</a> -> Kampa.<span class="mini-info">Vrtba Garden barok teras bahcesi; Lennon Wall ise 1980'lerden beri ozgurluk ve protesto sembolu.</span></span></li>
+            <li><span class="time">17:30</span><span><a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Old%20Town%20Bridge%20Tower%20Prague" target="_blank" rel="noreferrer">Old Town Bridge Tower</a> opsiyonel. Kisi basi 250 CZK; hava aciksa deger.<span class="mini-info">Kopruden Old Town'a giris kapisi; kule manzarasi kopruyu yukaridan gosterir.</span></span></li>
+            <li><span class="time">20:00</span><span>Aksam: <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=U%20Glaubicu%20Prague" target="_blank" rel="noreferrer">U Glaubicu</a> veya <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Mincovna%20Prague" target="_blank" rel="noreferrer">Mincovna</a> alternatifi. Iki kisi 1,100-1,700 CZK.</span></li>
           </ul>
           <p class="plan-note">Bu en dolu Prag gunu. TikTok'tan kesin eklenen yer Vrtba Garden; Cafe Savoy sadece kahvaltiya enerjiniz ve rezervasyonunuz varsa.</p>
         </article>
@@ -454,8 +468,8 @@
           <h2>30 Mayis Cumartesi - sakin rota + gece yolculugu</h2>
           <ul class="route-list">
             <li><span class="time">09:30</span><span>Kahvalti: kruvasan/hamur isi + kahve. Cantalari gece yolculuguna gore hafifletin.</span></li>
-            <li><span class="time">10:30</span><span>Vysehrad veya Letna'dan birini secin. TikTok ekstra <strong>Dancing House</strong> Vysehrad rotasina cok kolay eklenir.</span></li>
-            <li><span class="time">13:30</span><span>Oglen: <strong>Manifesto Market</strong> veya merkezde hafif yemek. Iki kisi 700-1,100 CZK.</span></li>
+            <li><span class="time">10:30</span><span><a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Vysehrad%20Prague" target="_blank" rel="noreferrer">Vysehrad</a> veya <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Letna%20Park%20Prague" target="_blank" rel="noreferrer">Letna</a>'dan birini secin. TikTok ekstra <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Dancing%20House%20Prague" target="_blank" rel="noreferrer">Dancing House</a> Vysehrad rotasina cok kolay eklenir.<span class="mini-info">Vysehrad daha sakin tarihi kale alani; Dancing House modern Prag'in en taninan binalarindan.</span></span></li>
+            <li><span class="time">13:30</span><span>Oglen: <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Manifesto%20Market%20Prague" target="_blank" rel="noreferrer">Manifesto Market</a> veya merkezde hafif yemek. Iki kisi 700-1,100 CZK.</span></li>
             <li><span class="time">16:00</span><span>Alisveris/kahve/son Old Town turu. Uzun gece yolculugu icin fazla sikistirmayin.</span></li>
             <li><span class="time">19:30</span><span>Erken aksam yemegi. Otobus/tren oncesi agir icki yok; su ve atistirmalik alin.</span></li>
             <li><span class="time">Gece</span><span>Prag -> Budapeste yolculugu.</span></li>
@@ -467,16 +481,16 @@
           <h2>31 Mayis Pazar - Budapeste tek gunluk rota</h2>
           <ul class="route-list">
             <li><span class="time">05:45</span><span><strong>Kelenfold'de inin.</strong> Buda tarafindan baslamak icin Nepliget'ten daha mantikli. M4 metro ile Szent Gellert ter veya Moricz Zsigmond korter'e gecin.</span></li>
-            <li><span class="time">06:20</span><span>TikTok ekstra <strong>Liberty Bridge</strong> / Gellert tarafinda sabah yuruyusu. Kahveci acilana kadar en iyi zaman oldurme sekli bu.</span></li>
-            <li><span class="time">08:00</span><span>Kahvalti: <strong>Freyja</strong> tarzinda kruvasan + kahve veya merkezde brunch. Kisi basi 2,500-4,000 HUF.</span></li>
-            <li><span class="time">09:30</span><span>Fisherman's Bastion + Matthias Church + Castle District. Pazar sabahi erken saat manzara icin cok iyi.</span></li>
-            <li><span class="time">12:30</span><span>Oglen: <strong>Getto Gulyas</strong> veya benzer Macar klasigi. Gulyas/paprikash; iki kisi 12,000-18,000 HUF.</span></li>
-            <li><span class="time">14:30</span><span>TikTok ekstra <strong>Vajdahunyad Castle</strong> + Heroes' Square + City Park. Uzun gun icin acik havada, temposu dusuk ve guzel foto verir.</span></li>
-            <li><span class="time">16:30</span><span>TikTok ekstra dinlenme molasi: <strong>TwentySix</strong>. Alternatif: Gerloczy Cafe veya sakin bir otel lobisi/kafe. 60-90 dakika oturun; bu gunu ayakta bitirmek zor.</span></li>
-            <li><span class="time">18:30</span><span>Parliament dis gorunum + Shoes on the Danube + Tuna kiyisi. Ic turu bu plana koymuyorum; zaman ve butceyi zorluyor.</span></li>
-            <li><span class="time">20:30</span><span>Aksam yemegi / kisa ruin bar: Szimpla tarafinda 1 icecek veya direkt rahat yemek. Cok yorulduysaniz Deak Ferenc ter civarina yakin kalin.</span></li>
-            <li><span class="time">23:30</span><span>Gece ikinci dinlenme: 24 saat acik McDonald's/istasyon kafe veya Deak-Kalvin hattinda sakin bir yer. Valiz varsa gun icinde Astoria/Locky gibi merkez depoya birakmak dusunulur.</span></li>
-            <li><span class="time">02:00</span><span>Deak Ferenc ter / Kalvin ter'den 100E Airport Express. Gece seferleri seyreklesir; ucus 05:00 ise 02:00-02:30 arasi cikmak daha rahat.</span></li>
+            <li><span class="time">06:20</span><span>TikTok ekstra <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Liberty%20Bridge%20Budapest" target="_blank" rel="noreferrer">Liberty Bridge</a> / Gellert tarafinda sabah yuruyusu. Kahveci acilana kadar en iyi zaman oldurme sekli bu.<span class="mini-info">Yesil metal kopru 1896 milenyum kutlamalari doneminden; sabah bos yakalanir.</span></span></li>
+            <li><span class="time">08:00</span><span>Kahvalti: <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Freyja%20Budapest" target="_blank" rel="noreferrer">Freyja</a> tarzinda kruvasan + kahve veya merkezde brunch. Kisi basi 2,500-4,000 HUF.</span></li>
+            <li><span class="time">09:30</span><span><a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Fisherman%27s%20Bastion%20Budapest" target="_blank" rel="noreferrer">Fisherman's Bastion</a> + <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Matthias%20Church%20Budapest" target="_blank" rel="noreferrer">Matthias Church</a> + Castle District. Pazar sabahi erken saat manzara icin cok iyi.<span class="mini-info">Fisherman's Bastion 1900'ler basindan neo-Romanesk seyir terasi; Parlamento manzarasi buradan cok iyi.</span></span></li>
+            <li><span class="time">12:30</span><span>Oglen: <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Getto%20Gulyas%20Budapest" target="_blank" rel="noreferrer">Getto Gulyas</a> veya benzer Macar klasigi. Gulyas/paprikash; iki kisi 12,000-18,000 HUF.<span class="mini-info">Gulyas corbadan cok guvec/corba arasi geleneksel Macar yemegi; paprikash daha kremali-tavuklu secenek.</span></span></li>
+            <li><span class="time">14:30</span><span>TikTok ekstra <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Vajdahunyad%20Castle%20Budapest" target="_blank" rel="noreferrer">Vajdahunyad Castle</a> + <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Heroes%27%20Square%20Budapest" target="_blank" rel="noreferrer">Heroes' Square</a> + <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=City%20Park%20Budapest" target="_blank" rel="noreferrer">City Park</a>. Uzun gun icin acik havada, temposu dusuk ve guzel foto verir.<span class="mini-info">Vajdahunyad, Macar mimari stillerini tek komplekste gosteren masalsi bir 1896 yapisi.</span></span></li>
+            <li><span class="time">16:30</span><span>TikTok ekstra dinlenme molasi: <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=TwentySix%20Budapest" target="_blank" rel="noreferrer">TwentySix</a>. Alternatif: <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Gerloczy%20Cafe%20Budapest" target="_blank" rel="noreferrer">Gerloczy Cafe</a> veya sakin bir otel lobisi/kafe. 60-90 dakika oturun; bu gunu ayakta bitirmek zor.<span class="mini-info">TwentySix bitkili avlusu ve brunch tabaklariyla viral; rezervasyon iyi olur.</span></span></li>
+            <li><span class="time">18:30</span><span><a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Hungarian%20Parliament%20Building%20Budapest" target="_blank" rel="noreferrer">Parliament</a> dis gorunum + <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Shoes%20on%20the%20Danube%20Bank%20Budapest" target="_blank" rel="noreferrer">Shoes on the Danube</a> + Tuna kiyisi. Ic turu bu plana koymuyorum; zaman ve butceyi zorluyor.<span class="mini-info">Ayakkabilar aniti, II. Dunya Savasi'nda Tuna kiyisinda oldurulen Yahudileri anar.</span></span></li>
+            <li><span class="time">20:30</span><span>Aksam yemegi / kisa ruin bar: <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Szimpla%20Kert%20Budapest" target="_blank" rel="noreferrer">Szimpla Kert</a> tarafinda 1 icecek veya direkt rahat yemek. Cok yorulduysaniz <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Deak%20Ferenc%20ter%20Budapest" target="_blank" rel="noreferrer">Deak Ferenc ter</a> civarina yakin kalin.<span class="mini-info">Szimpla, Budapeste ruin bar kulturunun en bilinen ornegi.</span></span></li>
+            <li><span class="time">23:30</span><span>Gece ikinci dinlenme: 24 saat acik McDonald's/istasyon kafe veya <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Deak%20Ferenc%20ter%20Budapest" target="_blank" rel="noreferrer">Deak</a>-<a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Kalvin%20ter%20Budapest" target="_blank" rel="noreferrer">Kalvin</a> hattinda sakin bir yer. Valiz varsa gun icinde Astoria/Locky gibi merkez depoya birakmak dusunulur.</span></li>
+            <li><span class="time">02:00</span><span><a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Deak%20Ferenc%20ter%20Budapest" target="_blank" rel="noreferrer">Deak Ferenc ter</a> / <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Kalvin%20ter%20Budapest" target="_blank" rel="noreferrer">Kalvin ter</a>'den 100E Airport Express. Gece seferleri seyreklesir; ucus 05:00 ise 02:00-02:30 arasi cikmak daha rahat.</span></li>
             <li><span class="time">03:00</span><span>Havalimaninda olun. Check-in/guvenlik acilmazsa landside bekleme olabilir; SkyCourt tarafinda daha rahat bank arayin.</span></li>
           </ul>
           <p class="plan-note">Nepliget Pest tarafinda ve M3 ile merkeze kolay, ama sabah 05:45'te Buda'ya yakin baslamak ve Gellert/Liberty Bridge hattina girmek icin Kelenfold daha akilli.</p>
@@ -539,6 +553,8 @@
         query: "Budapest Kelenfold bus station"
       }
     };
+
+    const mapPlaceUrl = query => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
 
     const places = [
       {
