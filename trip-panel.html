@@ -115,6 +115,196 @@
       font-size: 14px;
     }
 
+    .field-app {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin-bottom: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(29, 37, 40, .08);
+    }
+
+    .field-head {
+      padding: 14px;
+      background: #101719;
+      color: #fff;
+    }
+
+    .field-head h2 {
+      color: #fff;
+      font-size: 19px;
+      margin-bottom: 5px;
+    }
+
+    .field-head p {
+      margin: 0;
+      color: #c7d0d1;
+      font-size: 13px;
+    }
+
+    .day-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 10px;
+      background: #f4f4f0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .day-tab {
+      padding: 9px 7px;
+      font-size: 12px;
+      font-weight: 800;
+      min-height: 44px;
+    }
+
+    .day-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .next-step {
+      margin: 12px;
+      padding: 13px;
+      border-radius: 8px;
+      background: #f5f7ff;
+      border: 1px solid #ccd4ee;
+    }
+
+    .next-step .label {
+      color: #536070;
+    }
+
+    .next-title {
+      font-size: 18px;
+      font-weight: 900;
+      margin: 2px 0 8px;
+    }
+
+    .next-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .action-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      border: 1px solid #ccd4ee;
+      background: #fff;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13px;
+      min-height: 38px;
+      padding: 8px 10px;
+    }
+
+    .field-body {
+      padding: 0 12px 12px;
+    }
+
+    .step-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .step-item {
+      display: grid;
+      grid-template-columns: 34px 52px 1fr;
+      gap: 8px;
+      align-items: start;
+      padding: 11px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .step-item.done {
+      opacity: .55;
+    }
+
+    .step-item.done .step-title {
+      text-decoration: line-through;
+    }
+
+    .done-box {
+      width: 24px;
+      height: 24px;
+      margin: 0;
+      accent-color: var(--accent);
+    }
+
+    .step-time {
+      font-weight: 900;
+      color: var(--accent);
+      font-size: 13px;
+      padding-top: 3px;
+    }
+
+    .step-title {
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    .step-desc {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .step-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-top: 7px;
+    }
+
+    .status-tag {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 4px 7px;
+      font-size: 11px;
+      font-weight: 900;
+      color: #101719;
+      background: #dfe6e3;
+    }
+
+    .status-tag.must { background: #c7f0d8; }
+    .status-tag.optional { background: #ffe6a8; }
+    .status-tag.backup { background: #dde4ff; }
+    .status-tag.food { background: #ffd4c8; }
+
+    .nearby-box {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f8f8f5;
+      border: 1px solid var(--line);
+    }
+
+    .nearby-box h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .nearby-list {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .nearby-list li {
+      color: #4a5556;
+      font-size: 13px;
+    }
+
     .planner {
       display: grid;
       gap: 14px;
@@ -411,6 +601,9 @@
       .route-list li { grid-template-columns: 50px 1fr; }
       .budget-grid { grid-template-columns: 1fr; }
       .tiktok-grid { grid-template-columns: 1fr; }
+      .day-tabs { grid-template-columns: repeat(2, 1fr); }
+      .step-item { grid-template-columns: 30px 48px 1fr; }
+      .next-title { font-size: 17px; }
     }
   </style>
 </head>
@@ -435,6 +628,21 @@
       <div class="summary">
         Prag mesafeleri verdiginiz ev adresinden hesaplandi. Ilk gun cantalar icin Hlavni nadrazi en pratik secenek: eve yaklasik 5-7 dk yurume, resmi bagaj deposu 06:00-23:00. Budapeste plani hamamsiz ve 02:00-03:00 havalimani gecisli kuruldu.
       </div>
+      <section class="field-app" aria-labelledby="field-app-title">
+        <div class="field-head">
+          <h2 id="field-app-title">Saha Modu</h2>
+          <p>Telefonda hizli kullanmak icin: bugun, siradaki adim, tikler ve yakindaki ekstralar.</p>
+        </div>
+        <div class="day-tabs" id="dayTabs" aria-label="Gun secimi"></div>
+        <div class="next-step" id="nextStep"></div>
+        <div class="field-body">
+          <ul class="step-list" id="stepList"></ul>
+          <div class="nearby-box">
+            <h3>Yakindaki ekstra</h3>
+            <ul class="nearby-list" id="nearbyList"></ul>
+          </div>
+        </div>
+      </section>
       <div class="planner">
         <article class="plan-card">
           <h2>28 Mayis Persembe - 10:20 varis, 14:00 check-in</h2>
@@ -555,6 +763,90 @@
     };
 
     const mapPlaceUrl = query => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
+
+    const dayPlans = [
+      {
+        id: "may28",
+        tab: "28 Prag",
+        title: "28 Mayis - varis",
+        date: "2026-05-28",
+        extras: [
+          { title: "Klementinum", query: "Klementinum Prague", note: "Old Town'da yakin; tur slotu denk gelirse." },
+          { title: "Cafe Louvre", query: "Cafe Louvre Prague", note: "Klasik kafe molasi icin iyi yedek." },
+          { title: "Kampa", query: "Kampa Island Prague", note: "Charles Bridge sonrasi sakin dolasim." }
+        ],
+        steps: [
+          { id: "m28-1020", time: "10:20", tag: "kesin", title: "Hlavni nadrazi bagaj", query: "Praha hlavni nadrazi luggage storage", desc: "Cantayi birak; ev 5-8 dk yurume. Ana tren istasyonu, Fantova binasi da burada." },
+          { id: "m28-1115", time: "11:15", tag: "yedek", title: "Kahve / kruvasan", query: "Masarycka Prague cafe", desc: "Check-in oncesi hafif mola. Enerji toplama adimi." },
+          { id: "m28-1215", time: "12:15", tag: "yemek", title: "Five Guys #1", query: "Five Guys Narodni 63/26 Prague", desc: "Ilk Five Guys. Maj Narodni icinde; burger, cajun fries, milkshake." },
+          { id: "m28-1340", time: "13:40", tag: "kesin", title: "Cantayi alip eve gec", query: "Ruzova 1416/17 Prague", desc: "14:00 check-in icin Hlavni nadrazi'den eve yurume." },
+          { id: "m28-1515", time: "15:15", tag: "kesin", title: "Old Town yuruyusu", query: "Prague Astronomical Clock", desc: "Wenceslas, Powder Tower, Old Town Square, Orloj. Orloj 1410'dan kalma." },
+          { id: "m28-1745", time: "17:45", tag: "kesin", title: "Charles Bridge + Kampa", query: "Charles Bridge Prague", desc: "14. yuzyil koprusu; gunduz ve gece ayri guzel." },
+          { id: "m28-2000", time: "20:00", tag: "yemek", title: "Lokal Dlouha", query: "Lokal Dlouha Prague", desc: "Tank beer ve klasik Cek pub yemegi." }
+        ]
+      },
+      {
+        id: "may29",
+        tab: "29 Prag",
+        title: "29 Mayis - kale",
+        date: "2026-05-29",
+        extras: [
+          { title: "Cafe Savoy", query: "Cafe Savoy Prague", note: "Kahvalti icin opsiyonel; kuyruk olabilir." },
+          { title: "Old Town Bridge Tower", query: "Old Town Bridge Tower Prague", note: "Hava aciksa manzara icin deger." },
+          { title: "Signal Space", query: "Signal Space Prague", note: "Yagmur/yorgunluk yedegi." }
+        ],
+        steps: [
+          { id: "m29-0830", time: "08:30", tag: "yemek", title: "Prokop veya Cafe Savoy", query: "Prokop Coffee & Croissants Prague", desc: "Kruvasan-kahve. Savoy daha gosterisli, Prokop daha pratik." },
+          { id: "m29-0930", time: "09:30", tag: "kesin", title: "Prague Castle", query: "Prague Castle", desc: "Buyuk kale kompleksi. St. Vitus son giris 15:40 oldugu icin erken." },
+          { id: "m29-1000", time: "10:00", tag: "kesin", title: "St. Vitus Cathedral", query: "St. Vitus Cathedral Prague", desc: "Gotik katedral; kale turunda ilk buraya girin." },
+          { id: "m29-1400", time: "14:00", tag: "opsiyon", title: "Vrtba Garden + Lennon Wall", query: "Vrtba Garden Prague", desc: "Barok teras bahcesi ve ozgurluk/protesto sembolu Lennon Wall." },
+          { id: "m29-1730", time: "17:30", tag: "opsiyon", title: "Old Town Bridge Tower", query: "Old Town Bridge Tower Prague", desc: "Charles Bridge'i yukaridan gormek icin kisa cikis." },
+          { id: "m29-2000", time: "20:00", tag: "yemek", title: "U Glaubicu / Mincovna", query: "U Glaubicu Prague", desc: "Mala Strana veya Old Town tarafinda rahat Cek yemegi." }
+        ]
+      },
+      {
+        id: "may30",
+        tab: "30 Prag",
+        title: "30 Mayis - sakin gun",
+        date: "2026-05-30",
+        extras: [
+          { title: "Dancing House", query: "Dancing House Prague", note: "Vysehrad rotasina 10-15 dk foto molasi." },
+          { title: "Letna Park", query: "Letna Park Prague", note: "Kopruler manzarasi icin pratik." },
+          { title: "Manifesto Market", query: "Manifesto Market Prague", note: "Hafif yemek / son mola." }
+        ],
+        steps: [
+          { id: "m30-0930", time: "09:30", tag: "yemek", title: "Kahvalti", query: "Prague croissant cafe near Ruzova", desc: "Gece yolculugu oncesi rahat baslangic." },
+          { id: "m30-1030", time: "10:30", tag: "opsiyon", title: "Vysehrad veya Letna", query: "Vysehrad Prague", desc: "Vysehrad sakin kale alani; Letna daha pratik manzara." },
+          { id: "m30-1130", time: "11:30", tag: "opsiyon", title: "Dancing House", query: "Dancing House Prague", desc: "Modern Prag'in en taninan binalarindan; kisa foto molasi." },
+          { id: "m30-1330", time: "13:30", tag: "yemek", title: "Manifesto Market", query: "Manifesto Market Prague", desc: "Hafif yemek, secenek cok, temposu dusuk." },
+          { id: "m30-1930", time: "19:30", tag: "yemek", title: "Five Guys #2", query: "Five Guys Narodni 63/26 Prague", desc: "Budapeste'de gercek Five Guys yok; ikinci hak Prag'da." },
+          { id: "m30-night", time: "Gece", tag: "kesin", title: "Budapeste yolculugu", query: "Prague to Budapest bus", desc: "Su ve atistirmalik alin; agir icki yok." }
+        ]
+      },
+      {
+        id: "may31",
+        tab: "31 Buda",
+        title: "31 Mayis - Budapeste",
+        date: "2026-05-31",
+        extras: [
+          { title: "New York Cafe", query: "New York Cafe Budapest", note: "Cok turistik ve pahali; disaridan bile yeter." },
+          { title: "Gellert Hill", query: "Gellert Hill Budapest", note: "Enerji varsa sabah panorama." },
+          { title: "Gerloczy Cafe", query: "Gerloczy Cafe Budapest", note: "TwentySix doluysa dinlenme yedegi." }
+        ],
+        steps: [
+          { id: "m31-0545", time: "05:45", tag: "kesin", title: "Kelenfold'de in", query: "Budapest Kelenfold bus station", desc: "Buda tarafindan baslamak icin en mantikli varis." },
+          { id: "m31-0620", time: "06:20", tag: "kesin", title: "Liberty Bridge", query: "Liberty Bridge Budapest", desc: "1896 donemi yesil kopru; sabah bos yakalanir." },
+          { id: "m31-0800", time: "08:00", tag: "yemek", title: "Freyja kahvalti", query: "Freyja Budapest", desc: "Kruvasan-kahve; uzun gun oncesi oturarak basla." },
+          { id: "m31-0930", time: "09:30", tag: "kesin", title: "Fisherman's Bastion", query: "Fisherman's Bastion Budapest", desc: "Parlamento manzarali neo-Romanesk seyir terasi." },
+          { id: "m31-1230", time: "12:30", tag: "yemek", title: "Getto Gulyas", query: "Getto Gulyas Budapest", desc: "Gulyas / paprikash. Rezervasyon iyi fikir." },
+          { id: "m31-1430", time: "14:30", tag: "opsiyon", title: "Vajdahunyad + City Park", query: "Vajdahunyad Castle Budapest", desc: "Hamamsiz planda yavaslama ve foto alani." },
+          { id: "m31-1630", time: "16:30", tag: "opsiyon", title: "TwentySix dinlenme", query: "TwentySix Budapest", desc: "Bitkili avlu, uzun oturma molasi. Doluysa Gerloczy." },
+          { id: "m31-1830", time: "18:30", tag: "kesin", title: "Parliament + Shoes", query: "Shoes on the Danube Bank Budapest", desc: "Tuna kiyisi ve II. Dunya Savasi aniti." },
+          { id: "m31-2030", time: "20:30", tag: "opsiyon", title: "Szimpla / rahat yemek", query: "Szimpla Kert Budapest", desc: "Ruin bar kulturu; cok yorulduysan sadece yakin yemek." },
+          { id: "m31-0200", time: "02:00", tag: "kesin", title: "100E ile havalimani", query: "Deak Ferenc ter Budapest", desc: "Deak/Kalvin hattindan airport bus. 05:00 ucus icin rahat." }
+        ]
+      }
+    ];
 
     const places = [
       {
@@ -1033,6 +1325,115 @@
         }
       });
     });
+
+    const dayTabs = document.getElementById("dayTabs");
+    const nextStep = document.getElementById("nextStep");
+    const stepList = document.getElementById("stepList");
+    const nearbyList = document.getElementById("nearbyList");
+    const donePrefix = "trip-step-done:";
+
+    function localDateKey(date = new Date()) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    let activeDayId = dayPlans.find(day => day.date === localDateKey())?.id || dayPlans[0].id;
+
+    function isDone(stepId) {
+      return localStorage.getItem(donePrefix + stepId) === "1";
+    }
+
+    function setDone(stepId, checked) {
+      if (checked) {
+        localStorage.setItem(donePrefix + stepId, "1");
+      } else {
+        localStorage.removeItem(donePrefix + stepId);
+      }
+    }
+
+    function tagClass(tag) {
+      if (tag === "kesin") return "must";
+      if (tag === "opsiyon") return "optional";
+      if (tag === "yedek") return "backup";
+      if (tag === "yemek") return "food";
+      return "";
+    }
+
+    function tagText(tag) {
+      if (tag === "kesin") return "Kesin";
+      if (tag === "opsiyon") return "Opsiyonel";
+      if (tag === "yedek") return "Yedek";
+      if (tag === "yemek") return "Yemek";
+      return tag;
+    }
+
+    function renderFieldApp() {
+      const today = localDateKey();
+      const activeDay = dayPlans.find(day => day.id === activeDayId) || dayPlans[0];
+
+      dayTabs.innerHTML = dayPlans.map(day => `
+        <button class="day-tab ${day.id === activeDay.id ? "active" : ""}" data-day="${day.id}">
+          ${day.tab}${day.date === today ? "<br>Bugun" : ""}
+        </button>
+      `).join("");
+
+      const firstOpen = activeDay.steps.find(step => !isDone(step.id)) || activeDay.steps[activeDay.steps.length - 1];
+      const nextDone = firstOpen ? isDone(firstOpen.id) : false;
+      nextStep.innerHTML = firstOpen ? `
+        <span class="label">Siradaki adim</span>
+        <div class="next-title">${firstOpen.time} - ${firstOpen.title}</div>
+        <div class="step-desc">${firstOpen.desc}</div>
+        <div class="next-actions">
+          <a class="action-link" href="${mapPlaceUrl(firstOpen.query)}" target="_blank" rel="noreferrer">Google Maps'te ac</a>
+          <button class="action-link" data-next-done="${firstOpen.id}">${nextDone ? "Geri al" : "Yapildi"}</button>
+        </div>
+      ` : "";
+
+      stepList.innerHTML = activeDay.steps.map(step => {
+        const checked = isDone(step.id);
+        return `
+          <li class="step-item ${checked ? "done" : ""}">
+            <input class="done-box" type="checkbox" data-step="${step.id}" ${checked ? "checked" : ""} aria-label="${step.title} yapildi">
+            <span class="step-time">${step.time}</span>
+            <span>
+              <a class="place-link step-title" href="${mapPlaceUrl(step.query)}" target="_blank" rel="noreferrer">${step.title}</a>
+              <span class="step-desc">${step.desc}</span>
+              <span class="step-tags"><span class="status-tag ${tagClass(step.tag)}">${tagText(step.tag)}</span></span>
+            </span>
+          </li>
+        `;
+      }).join("");
+
+      nearbyList.innerHTML = activeDay.extras.map(extra => `
+        <li><a class="place-link" href="${mapPlaceUrl(extra.query)}" target="_blank" rel="noreferrer">${extra.title}</a> - ${extra.note}</li>
+      `).join("");
+    }
+
+    dayTabs.addEventListener("click", event => {
+      const button = event.target.closest("[data-day]");
+      if (!button) return;
+      activeDayId = button.dataset.day;
+      renderFieldApp();
+    });
+
+    stepList.addEventListener("change", event => {
+      const checkbox = event.target.closest("[data-step]");
+      if (!checkbox) return;
+      setDone(checkbox.dataset.step, checkbox.checked);
+      renderFieldApp();
+    });
+
+    nextStep.addEventListener("click", event => {
+      const button = event.target.closest("[data-next-done]");
+      if (!button) return;
+      const stepId = button.dataset.nextDone;
+      setDone(stepId, !isDone(stepId));
+      renderFieldApp();
+    });
+
+    renderFieldApp();
   </script>
 </body>
 </html>
