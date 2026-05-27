@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prag & Budapeste Plan Paneli</title>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    :root {
+      --bg: #f6f5f1;
+      --ink: #1d2528;
+      --muted: #667171;
+      --line: #d8ddd8;
+      --paper: #ffffff;
+      --prague: #b04531;
+      --budapest: #1e6f78;
+      --accent: #283f8f;
+      --soft: #ebe8df;
+      --shadow: 0 18px 45px rgba(29, 37, 40, .12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    header {
+      padding: 28px 28px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.74);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: end;
+      max-width: 1460px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 46px);
+      letter-spacing: 0;
+      line-height: 1;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--muted);
+      max-width: 780px;
+      font-size: 15px;
+    }
+
+    .home-pill {
+      background: var(--ink);
+      color: white;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    main {
+      max-width: 1460px;
+      margin: 0 auto;
+      padding: 22px 28px 34px;
+      display: grid;
+      grid-template-columns: minmax(360px, 520px) 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 10px 13px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button.active {
+      color: white;
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .summary {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 16px;
+      color: #384143;
+      font-size: 14px;
+    }
+
+    .planner {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .plan-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 6px 18px rgba(29, 37, 40, .06);
+    }
+
+    .plan-card h2 {
+      margin-bottom: 8px;
+    }
+
+    .route-list {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .route-list li {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 10px;
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+      color: #3c4648;
+      font-size: 14px;
+    }
+
+    .time {
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .plan-note {
+      color: var(--muted);
+      margin: 8px 0 0;
+      font-size: 13px;
+    }
+
+    .budget-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .budget-box {
+      border: 1px solid var(--line);
+      background: #f8f8f5;
+      border-radius: 8px;
+      padding: 10px;
+      min-height: 72px;
+    }
+
+    .budget-box strong {
+      display: block;
+      font-size: 18px;
+      margin-top: 3px;
+    }
+
+    .tiktok-section {
+      background: #111719;
+      color: #fff;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 18px;
+      border: 1px solid #2b3537;
+    }
+
+    .tiktok-section h2 {
+      color: #fff;
+    }
+
+    .tiktok-intro {
+      color: #c7d0d1;
+      margin: 7px 0 13px;
+      font-size: 14px;
+    }
+
+    .tiktok-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .tiktok-card {
+      background: #1b2326;
+      border: 1px solid #354246;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .tiktok-card h3 {
+      margin: 0 0 7px;
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+
+    .tiktok-card p {
+      margin: 0 0 8px;
+      color: #c7d0d1;
+      font-size: 13px;
+    }
+
+    .tiktok-card a {
+      color: #9ed8ff;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .mini-tag {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 7px;
+      margin-bottom: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #101719;
+      background: #b9f3e4;
+    }
+
+    .cards {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(29, 37, 40, .06);
+    }
+
+    .card img {
+      width: 100%;
+      aspect-ratio: 16 / 8.5;
+      object-fit: cover;
+      display: block;
+      background: #ddd;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+
+    .tag {
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      color: white;
+    }
+
+    .tag.prague { background: var(--prague); }
+    .tag.budapest { background: var(--budapest); }
+
+    .desc {
+      color: var(--muted);
+      margin: 9px 0 12px;
+      font-size: 14px;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+
+    .meta div {
+      background: #f8f8f5;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px;
+      min-height: 58px;
+    }
+
+    .label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 4px;
+    }
+
+    .value {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .links a {
+      text-decoration: none;
+      color: var(--accent);
+      border: 1px solid #ccd4ee;
+      background: #f5f7ff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .map-wrap {
+      position: sticky;
+      top: 126px;
+      min-height: calc(100vh - 160px);
+    }
+
+    #map {
+      height: calc(100vh - 160px);
+      min-height: 620px;
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      background: #e5e2dc;
+    }
+
+    .legend {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: -1px;
+    }
+
+    .hidden { display: none; }
+
+    @media (max-width: 980px) {
+      header { position: static; }
+      .topline { align-items: start; flex-direction: column; }
+      .home-pill { white-space: normal; }
+      main { grid-template-columns: 1fr; padding: 18px; }
+      .map-wrap { position: static; order: -1; }
+      #map { height: 52vh; min-height: 390px; }
+    }
+
+    @media (max-width: 560px) {
+      header { padding: 22px 18px 16px; }
+      .meta { grid-template-columns: 1fr; }
+      .route-list li { grid-template-columns: 50px 1fr; }
+      .budget-grid { grid-template-columns: 1fr; }
+      .tiktok-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topline">
+      <div>
+        <h1>Prag & Budapeste Plan Paneli</h1>
+        <p class="subtitle">28 Mayis 10:20 Prag varis, 14:00 check-in, 30'u 31'e baglayan gece Budapeste yolculugu, 1 Haziran 05:00 Istanbul ucusu icin ilk secilecek yerler.</p>
+      </div>
+      <div class="home-pill">Prag ev: Ruzova 1416/17, Nove Mesto</div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="controls" aria-label="Sehir filtresi">
+        <button class="active" data-filter="all">Hepsi</button>
+        <button data-filter="prague">Prag</button>
+        <button data-filter="budapest">Budapeste</button>
+      </div>
+      <div class="summary">
+        Prag mesafeleri verdiginiz ev adresinden hesaplandi. Ilk gun cantalar icin Hlavni nadrazi en pratik secenek: eve yaklasik 5-7 dk yurume, resmi bagaj deposu 06:00-23:00. Budapeste plani hamamsiz ve 02:00-03:00 havalimani gecisli kuruldu.
+      </div>
+      <div class="planner">
+        <article class="plan-card">
+          <h2>28 Mayis Persembe - 10:20 varis, 14:00 check-in</h2>
+          <ul class="route-list">
+            <li><span class="time">10:20</span><span>Prag varis. Direkt <strong>Hlavni nadrazi</strong> bagaj deposuna gecin; evinize de cok yakin oldugu icin en az surtunmeli cozum bu.</span></li>
+            <li><span class="time">10:50</span><span>Cantalari birakin. Resmi normal bagaj deposu 06:00-23:00; self servis kutular icin sizdeki bilgiye gore 03:30-00:30. Ortalama 100 CZK / 24 saat mantikli varsayim.</span></li>
+            <li><span class="time">11:15</span><span>Kahve + hafif kahvalti: Masarycka / Jindrisska civarinda kruvasan-kahve. Kisi basi 180-280 CZK.</span></li>
+            <li><span class="time">12:15</span><span>Oglen yemegi: <strong>Kantyna</strong> cok iyi ve eve yakin. Daha klasik oturma isterseniz <strong>Cafe Louvre</strong>. Kisi basi 300-500 CZK.</span></li>
+            <li><span class="time">13:40</span><span>Hlavni nadrazi'den cantalari alip eve yuruyun. 14:00 check-in.</span></li>
+            <li><span class="time">15:15</span><span>Wenceslas Square -> Powder Tower -> Old Town Square -> Astronomical Clock yuruyusu.</span></li>
+            <li><span class="time">17:45</span><span>Charles Bridge ve Kampa tarafina gecis. Kopruyu gunduz gorup gece tekrar donmek iyi olur.</span></li>
+            <li><span class="time">20:00</span><span>Aksam: <strong>Lokal Dlouha</strong>. Gulas/svickova + tank beer. Iki kisi 900-1,300 CZK.</span></li>
+          </ul>
+          <p class="plan-note">Eve daha yakin teorik app bazli depolar olabilir, ama acilis-kapanis ve guvenilirlik degisken. Hlavni nadrazi hem varis aksinda hem eve cok yakin oldugu icin benim secimim bu.</p>
+        </article>
+
+        <article class="plan-card">
+          <h2>29 Mayis Cuma - Kale, Mala Strana, manzara</h2>
+          <ul class="route-list">
+            <li><span class="time">08:30</span><span>Kahvalti: <strong>Prokop Coffee & Croissants</strong> veya Masarycka tarafinda kruvasan + kahve. Kisi basi 180-280 CZK.</span></li>
+            <li><span class="time">09:30</span><span>Tram/metro ile Prague Castle. Kale ana devre bileti kisi basi 450 CZK.</span></li>
+            <li><span class="time">12:45</span><span>Oglen: kale yakininda hafif yemek; turistik meydanda agir restorana oturmayin. Kisi basi 250-400 CZK.</span></li>
+            <li><span class="time">14:00</span><span>St. Vitus -> Golden Lane -> Mala Strana inisi -> Lennon Wall -> Kampa.</span></li>
+            <li><span class="time">17:30</span><span>Old Town Bridge Tower opsiyonel. Kisi basi 250 CZK; hava aciksa deger.</span></li>
+            <li><span class="time">20:00</span><span>Aksam: <strong>U Glaubicu</strong> veya <strong>Mincovna</strong> alternatifi. Iki kisi 1,100-1,700 CZK.</span></li>
+          </ul>
+          <p class="plan-note">Bu en dolu Prag gunu. Kaleye erken girmek kalabalik ve sicaklik riskini azaltir.</p>
+        </article>
+
+        <article class="plan-card">
+          <h2>30 Mayis Cumartesi - sakin rota + gece yolculugu</h2>
+          <ul class="route-list">
+            <li><span class="time">09:30</span><span>Kahvalti: kruvasan/hamur isi + kahve. Cantalari gece yolculuguna gore hafifletin.</span></li>
+            <li><span class="time">10:30</span><span>Vysehrad veya Letna'dan birini secin. Daha romantik/sakin: Vysehrad. Daha pratik manzara: Letna.</span></li>
+            <li><span class="time">13:30</span><span>Oglen: <strong>Manifesto Market</strong> veya merkezde hafif yemek. Iki kisi 700-1,100 CZK.</span></li>
+            <li><span class="time">16:00</span><span>Alisveris/kahve/son Old Town turu. Uzun gece yolculugu icin fazla sikistirmayin.</span></li>
+            <li><span class="time">19:30</span><span>Erken aksam yemegi. Otobus/tren oncesi agir icki yok; su ve atistirmalik alin.</span></li>
+            <li><span class="time">Gece</span><span>Prag -> Budapeste yolculugu.</span></li>
+          </ul>
+          <p class="plan-note">Bu gunu yedekli tuttum; hava kotu olursa Vysehrad/Letna yerine kafe + muzeye kayabiliriz.</p>
+        </article>
+
+        <article class="plan-card">
+          <h2>31 Mayis Pazar - Budapeste tek gunluk rota</h2>
+          <ul class="route-list">
+            <li><span class="time">05:45</span><span><strong>Kelenfold'de inin.</strong> Buda tarafindan baslamak icin Nepliget'ten daha mantikli. M4 metro ile Szent Gellert ter veya Moricz Zsigmond korter'e gecin.</span></li>
+            <li><span class="time">06:20</span><span>Liberty Bridge / Gellert tarafinda sabah yuruyusu. Kahveci acilana kadar en iyi zaman oldurme sekli bu.</span></li>
+            <li><span class="time">08:00</span><span>Kahvalti: <strong>Freyja</strong> tarzinda kruvasan + kahve veya merkezde brunch. Kisi basi 2,500-4,000 HUF.</span></li>
+            <li><span class="time">09:30</span><span>Fisherman's Bastion + Matthias Church + Castle District. Pazar sabahi erken saat manzara icin cok iyi.</span></li>
+            <li><span class="time">12:30</span><span>Oglen: <strong>Getto Gulyas</strong> veya benzer Macar klasigi. Gulyas/paprikash; iki kisi 12,000-18,000 HUF.</span></li>
+            <li><span class="time">14:30</span><span>Hamam yoksa: <strong>Vajdahunyad Castle + Heroes' Square + City Park</strong>. Uzun gun icin acik havada, temposu dusuk ve guzel foto verir.</span></li>
+            <li><span class="time">16:30</span><span>Dinlenme molasi: <strong>TwentySix</strong>, <strong>Gerloczy Cafe</strong> veya sakin bir otel lobisi/kafe. 60-90 dakika oturun; bu gunu ayakta bitirmek zor.</span></li>
+            <li><span class="time">18:30</span><span>Parliament dis gorunum + Shoes on the Danube + Tuna kiyisi. Ic turu bu plana koymuyorum; zaman ve butceyi zorluyor.</span></li>
+            <li><span class="time">20:30</span><span>Aksam yemegi / kisa ruin bar: Szimpla tarafinda 1 icecek veya direkt rahat yemek. Cok yorulduysaniz Deak Ferenc ter civarina yakin kalin.</span></li>
+            <li><span class="time">23:30</span><span>Gece ikinci dinlenme: 24 saat acik McDonald's/istasyon kafe veya Deak-Kalvin hattinda sakin bir yer. Valiz varsa gun icinde Astoria/Locky gibi merkez depoya birakmak dusunulur.</span></li>
+            <li><span class="time">02:00</span><span>Deak Ferenc ter / Kalvin ter'den 100E Airport Express. Gece seferleri seyreklesir; ucus 05:00 ise 02:00-02:30 arasi cikmak daha rahat.</span></li>
+            <li><span class="time">03:00</span><span>Havalimaninda olun. Check-in/guvenlik acilmazsa landside bekleme olabilir; SkyCourt tarafinda daha rahat bank arayin.</span></li>
+          </ul>
+          <p class="plan-note">Nepliget Pest tarafinda ve M3 ile merkeze kolay, ama sabah 05:45'te Buda'ya yakin baslamak ve Gellert/Liberty Bridge hattina girmek icin Kelenfold daha akilli.</p>
+        </article>
+
+        <article class="plan-card">
+          <h2>Onceden bilet / rezervasyon gerekenler</h2>
+          <ul class="route-list">
+            <li><span class="time">Al</span><span><strong>Prague Castle</strong>: online almak sart degil ama kuyrugu azaltir. Ana devreyi 29 Mayis sabaha koyun.</span></li>
+            <li><span class="time">Al</span><span><strong>Old Town Bridge Tower</strong>: hava iyiyse ayni gun de alinabilir; erken saat indirimi varsa sabah dusunun.</span></li>
+            <li><span class="time">Rez</span><span><strong>Lokal Dlouha / Cafe Savoy / Kantyna / TwentySix / Getto Gulyas</strong>: populer saatlerde rezervasyon iyi fikir. En kritik olanlar Lokal, Cafe Savoy, Getto Gulyas.</span></li>
+            <li><span class="time">Ops</span><span><strong>Klementinum</strong>: rehberli tur slotlari dolabilir; TikTok/foto ilgisi yuksekse onceden bakilir. Kesin rota degil.</span></li>
+            <li><span class="time">Pas</span><span><strong>Budapeste Parlamento ic turu</strong>: tek gun + 05:00 ucus temposunda onermiyorum. Disaridan gece goruntu yeterli.</span></li>
+            <li><span class="time">Al</span><span><strong>100E Airport Express</strong>: BKK uygulamasindan veya makinadan ayni gun alin. Kisi basi 2,500 HUF.</span></li>
+          </ul>
+          <p class="plan-note">Bavul notu: Prag'da Hlavni nadrazi en pratik. Budapeste'de cantayla gezmek istemezseniz Astoria/Deak hattinda gunluk locker bakin; 22:00 sonrasi erisim kurallarini mutlaka kontrol edin.</p>
+        </article>
+
+        <article class="plan-card">
+          <h2>Tahmini toplam butce - 2 kisi</h2>
+          <div class="budget-grid">
+            <div class="budget-box"><span class="label">Prag</span><strong>7,800-10,800 CZK</strong><span class="plan-note">Yemek, icecek, ulasim, kale, 1 kule</span></div>
+            <div class="budget-box"><span class="label">Budapeste</span><strong>42,000-68,000 HUF</strong><span class="plan-note">Yemek, ulasim, kafede dinlenme, airport bus</span></div>
+            <div class="budget-box"><span class="label">Euro karsiligi</span><strong>440-610 EUR</strong><span class="plan-note">Konaklama ve sehirler arasi yol haric</span></div>
+          </div>
+          <p class="plan-note">Hamam cikinca Budapeste ciddi ucuzladi. Rahat versiyon iyi aksam yemegi, 2-3 uzun kafe molasi ve taksi eklenirse 650 EUR civarina yaklasir.</p>
+        </article>
+      </div>
+      <section class="tiktok-section" aria-labelledby="tiktok-title">
+        <h2 id="tiktok-title">TikTok'takiler</h2>
+        <p class="tiktok-intro">Bunlar ana rotanin bel kemigi degil; daha cok viral foto, kafe veya deneyim duraklari. Yakindan geciyorsaniz ekleyin, kuyruk varsa romantizmi kurtarmak icin hizlica pas gecin.</p>
+        <div class="tiktok-grid" id="tiktokCards"></div>
+      </section>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <aside class="map-wrap">
+      <div id="map"></div>
+      <div class="legend">
+        <span class="dot" style="background: var(--prague)"></span>Prag
+        &nbsp;&nbsp;
+        <span class="dot" style="background: var(--budapest)"></span>Budapeste
+      </div>
+    </aside>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const origins = {
+      prague: {
+        name: "Prag ev",
+        lat: 50.0831744,
+        lng: 14.431133,
+        query: "Ruzova 1416/17, 110 00 Nove Mesto, Prague"
+      },
+      budapest: {
+        name: "Budapeste baslangic: Kelenfold",
+        lat: 47.4644749,
+        lng: 19.0194995,
+        query: "Budapest Kelenfold bus station"
+      }
+    };
+
+    const places = [
+      {
+        city: "prague",
+        title: "Hlavni Nadrazi Bagaj Deposu",
+        lat: 50.0833,
+        lng: 14.4358,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Praha_hlavn%C3%AD_n%C3%A1dra%C5%BE%C3%AD%2C_Fantova_budova.jpg",
+        price: "Yaklasik 100 CZK / 24 saat; resmi depo 06:00-23:00",
+        distance: "Evden 500-650 m",
+        walk: "5-8 dk",
+        transit: "Gerek yok",
+        note: "10:20 varis ve 14:00 check-in arasi en temiz cozum. Self servis kutular sizdeki bilgiye gore 03:30-00:30; normal depo icin 06:00-23:00 bilgisini baz alin.",
+        mapQuery: "Praha hlavni nadrazi luggage storage"
+      },
+      {
+        city: "prague",
+        title: "Old Town Square + Astronomical Clock",
+        lat: 50.0869802,
+        lng: 14.4207138,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/2017-06-03_Prague_Astronomical_Clock.jpg",
+        price: "Meydan/saat gosterisi ucretsiz; kule opsiyonel ~350 CZK",
+        distance: "1.1 km",
+        walk: "14 dk",
+        transit: "6-10 dk",
+        note: "Prag'in ilk gorulecek klasik merkezi. Saat basi kisa gosteriyi disaridan izleyin; kuleyi manzara icin dusunun.",
+        mapQuery: "Prague Astronomical Clock"
+      },
+      {
+        city: "prague",
+        title: "Charles Bridge",
+        lat: 50.0866258,
+        lng: 14.4101485,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Charles_Bridge%2C_Prague%2C_January%2C_2017-2.jpg",
+        price: "Ucretsiz",
+        distance: "1.9 km",
+        walk: "25 dk",
+        transit: "12-16 dk",
+        note: "Sabah erken veya gece cok daha iyi. Gun ortasi kalabalik ama ilk Prag icin kesin.",
+        mapQuery: "Charles Bridge Prague"
+      },
+      {
+        city: "prague",
+        title: "Old Town Bridge Tower",
+        lat: 50.0861752,
+        lng: 14.4136092,
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Old_Town_Bridge_Tower%2C_Prague.jpg/1280px-Old_Town_Bridge_Tower%2C_Prague.jpg",
+        price: "250 CZK; acilistan sonraki ilk saat %50 indirim",
+        distance: "1.5 km",
+        walk: "19 dk",
+        transit: "10-14 dk",
+        note: "Kopru ve Old Town manzarasi icin fiyat/performans iyi. Kalabalik artmadan cikmak mantikli.",
+        mapQuery: "Old Town Bridge Tower Prague"
+      },
+      {
+        city: "prague",
+        title: "Prague Castle + St. Vitus + Golden Lane",
+        lat: 50.0908114,
+        lng: 14.4005225,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Prague_Castle_from_Clocktower.jpg",
+        price: "Ana devre 450 CZK; bilet 2 gun gecerli",
+        distance: "3.2 km",
+        walk: "45 dk, yokuslu",
+        transit: "22-30 dk",
+        note: "Prag'in ana tarihi noktasi. 29 Mayis'ta St. Vitus saatleri kisitli gorunuyor; erken gitmek iyi olur.",
+        mapQuery: "Prague Castle"
+      },
+      {
+        city: "prague",
+        title: "Kampa + Lennon Wall",
+        lat: 50.0862417,
+        lng: 14.4068148,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Lennon_Wall_Prague.JPG",
+        price: "Ucretsiz",
+        distance: "2.2 km",
+        walk: "30 dk",
+        transit: "16-20 dk",
+        note: "Charles Bridge sonrasi romantik ve sakin bir dolasim. Foto ve kisa mola icin guzel.",
+        mapQuery: "Lennon Wall Prague"
+      },
+      {
+        city: "prague",
+        title: "Letna Park",
+        lat: 50.0964045,
+        lng: 14.4141409,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Vltava_river_in_Prague.jpg",
+        price: "Ucretsiz; bira/kahve ekstra",
+        distance: "2.0 km",
+        walk: "28 dk",
+        transit: "15-18 dk",
+        note: "Kopruler manzarasi ve gun batimi icin cok iyi. Kisa geziye iyi oturur.",
+        mapQuery: "Letna Park Prague"
+      },
+      {
+        city: "prague",
+        title: "Vysehrad",
+        lat: 50.0642146,
+        lng: 14.4194469,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Vy%C5%A1ehrad%2C_z_C%C3%ADsa%C5%99sk%C3%A9_louky_%2801%29.jpg",
+        price: "Alan ucretsiz; ic mekanlar opsiyonel",
+        distance: "2.9 km",
+        walk: "40 dk",
+        transit: "15-18 dk",
+        note: "Daha sakin, yerel hissi yuksek bir manzara alternatifi. Program doluysa Letna ile birini secin.",
+        mapQuery: "Vysehrad Prague"
+      },
+      {
+        city: "prague",
+        title: "Lokal Dlouha / Czech Pub Deneyimi",
+        lat: 50.0906955,
+        lng: 14.4257576,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Pilsner_Urquell_2011.jpg",
+        price: "Ana yemek 180-300 CZK; bira 50-90 CZK",
+        distance: "1.2 km",
+        walk: "15 dk",
+        transit: "8-12 dk",
+        note: "Svickova, gulas + knedliky, smazeny syr ve tank beer deneyin. Eski sehir meydaninin tam uzerindeki restoranlardan uzak durun.",
+        mapQuery: "Lokal Dlouha Prague"
+      },
+      {
+        city: "budapest",
+        title: "Fisherman's Bastion + Matthias Church",
+        lat: 47.5023053,
+        lng: 19.0346998,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Budapest_Fisherman%27s_Bastion_Tower-20080321-RM-102159.jpg",
+        price: "Alt kisim genelde ucretsiz; ust kule 1,700 HUF, 31 Mayis 19:00 sonrasi ucretsiz",
+        distance: "Kelenfold'den 5.0 km",
+        walk: "70 dk",
+        transit: "24-32 dk",
+        note: "Budapeste'nin en iyi ilk manzarasi. Gun batimi veya gece cok daha etkili.",
+        mapQuery: "Fisherman's Bastion Budapest"
+      },
+      {
+        city: "budapest",
+        title: "Hungarian Parliament + Danube Shoes",
+        lat: 47.507123,
+        lng: 19.045826,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Hungarian_Parliament_Building_from_across_the_Danube%2C_Budapest_IMG_1048.jpg",
+        price: "Disaridan ucretsiz; ic tur non-EEA 14,000 HUF, EEA 7,000 HUF",
+        distance: "Kelenfold'den 5.9 km",
+        walk: "80 dk",
+        transit: "25-32 dk",
+        note: "Disaridan kesin gorun. Ic tur pahali ama mimari merakiniz varsa degerli.",
+        mapQuery: "Hungarian Parliament Building Budapest"
+      },
+      {
+        city: "budapest",
+        title: "City Park + Vajdahunyad Castle",
+        lat: 47.5184354,
+        lng: 19.0825223,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Vajdahunyad_Castle%2C_Budapest.jpg",
+        price: "Dis alan ucretsiz; kafe/icecek ekstra",
+        distance: "Kelenfold'den 9.0 km",
+        walk: "2 saate yakin",
+        transit: "32-40 dk",
+        note: "Hamam yoksa uzun gun icin en iyi yavaslama alani. Heroes' Square, Vajdahunyad ve park kafeleri ayni bolgede.",
+        mapQuery: "Vajdahunyad Castle Budapest"
+      },
+      {
+        city: "budapest",
+        title: "Great Market Hall - yedek, Pazar kapali",
+        lat: 47.4865753,
+        lng: 19.0589936,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Hungary-0217_-_Great_Market_Hall_%287335312170%29.jpg",
+        price: "Giris ucretsiz; Pazar kapali",
+        distance: "Kelenfold'den 4.1 km",
+        walk: "55 dk",
+        transit: "12-16 dk",
+        note: "Sizin gununuz Pazar oldugu icin ana plana koymadim. Disaridan gorulebilir; yemek icin Yahudi Mahallesi daha mantikli.",
+        mapQuery: "Great Market Hall Budapest"
+      },
+      {
+        city: "budapest",
+        title: "Szimpla Kert / Ruin Bar",
+        lat: 47.4969297,
+        lng: 19.0633135,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Szimpla_Kert_Budapest_1.jpg",
+        price: "Bira yaklasik 900-1,800 HUF; kokteyl 2,500-4,500 HUF",
+        distance: "Kelenfold'den 6.2 km",
+        walk: "85 dk",
+        transit: "20-28 dk",
+        note: "Turistik ama atmosfer icin bir icecek ve foto iyi. Gece gec saatlerde cok kalabalik olabilir.",
+        mapQuery: "Szimpla Kert Budapest"
+      },
+      {
+        city: "budapest",
+        title: "Heroes' Square + City Park",
+        lat: 47.5141659,
+        lng: 19.0778379,
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Heroes%E2%80%99_Square%2C_Budapest.jpg",
+        price: "Ucretsiz",
+        distance: "Kelenfold'den 8.6 km",
+        walk: "2 saate yakin",
+        transit: "30-38 dk",
+        note: "City Park ve Vajdahunyad ile ayni bolge. Hamama gitmeden de bu aks guzel foto ve nefes molasi verir.",
+        mapQuery: "Heroes Square Budapest"
+      }
+    ];
+
+    const tiktokPlaces = [
+      {
+        city: "prague",
+        title: "Dancing House",
+        lat: 50.0754502,
+        lng: 14.4142083,
+        type: "Foto noktasi",
+        price: "Disaridan ucretsiz; teras/kafe ekstra",
+        note: "Vltava kiyisinda kisa foto molasi. Vysehrad gunune veya nehir yuruyusune eklenir.",
+        mapQuery: "Dancing House Prague"
+      },
+      {
+        city: "prague",
+        title: "Klementinum Library",
+        lat: 50.0866547,
+        lng: 14.4161186,
+        type: "Viral ic mekan",
+        price: "Rehberli tur genelde ucretli; saat kontrol edin",
+        note: "Barok kutuphane goruntusu cok viral. Fotografa izin/rota kurallari degisebildigi icin esnek tutun.",
+        mapQuery: "Klementinum Prague"
+      },
+      {
+        city: "prague",
+        title: "Vrtba Garden",
+        lat: 50.0864888,
+        lng: 14.4024823,
+        type: "Sakin foto",
+        price: "Ucretli bahce; sezon/saat kontrol edin",
+        note: "Mala Strana'da kaleden inerken romantik, daha az kalabalik bir bahce molasi.",
+        mapQuery: "Vrtba Garden Prague"
+      },
+      {
+        city: "prague",
+        title: "Cafe Savoy",
+        lat: 50.0809258,
+        lng: 14.4072158,
+        type: "Kahvalti/kruvasan",
+        price: "Kisi basi 300-600 CZK",
+        note: "Gosterisli tavan, klasik kahvalti ve tatli icin viral. Rezervasyon iyi fikir.",
+        mapQuery: "Cafe Savoy Prague"
+      },
+      {
+        city: "prague",
+        title: "Signal Space",
+        lat: 50.0842628,
+        lng: 14.4216171,
+        type: "Yeni dijital deneyim",
+        price: "Ucretli; online saat kontrol edin",
+        note: "2025'te acilan immersif isik/dijital sanat alani. Yagmur planina cok iyi oturur.",
+        mapQuery: "Signal Space Prague"
+      },
+      {
+        city: "prague",
+        title: "U Krale Brabantskeho",
+        lat: 50.0889727,
+        lng: 14.4014845,
+        type: "Orta cag taverna",
+        price: "Yemek + show pahali olabilir",
+        note: "TikTok'ta atmosferiyle donen orta cag tavernasi. Turistik ama eglenceli; rezervasyonsuz riskli.",
+        mapQuery: "U Krale Brabantskeho Prague"
+      },
+      {
+        city: "budapest",
+        title: "New York Cafe",
+        lat: 47.4986782,
+        lng: 19.0704636,
+        type: "Viral kafe",
+        price: "Kahve/tatli kisi basi 5,000-10,000 HUF",
+        note: "Cok gosterisli, cok turistik, kuyruklu. Tek gununuzde sadece sabir varsa ekleyin.",
+        mapQuery: "New York Cafe Budapest"
+      },
+      {
+        city: "budapest",
+        title: "TwentySix",
+        lat: 47.4995723,
+        lng: 19.0587661,
+        type: "Brunch / botanik ic mekan",
+        price: "Kisi basi 5,000-9,000 HUF",
+        note: "Bitkili avlu estetikligiyle viral. Szimpla ve Deak hattina yakin; rezervasyon iyi olur.",
+        mapQuery: "TwentySix Budapest"
+      },
+      {
+        city: "budapest",
+        title: "Zoo Cafe",
+        lat: 47.4895111,
+        lng: 19.0584608,
+        type: "Viral kafe",
+        price: "Kisi basi 3,000-6,000 HUF",
+        note: "Hayvanli kafe konseptiyle TikTok'ta donuyor. Size konsept etik/konforlu gelmiyorsa pas gecin.",
+        mapQuery: "Zoo Cafe Budapest"
+      },
+      {
+        city: "budapest",
+        title: "Vajdahunyad Castle",
+        lat: 47.5153549,
+        lng: 19.0818753,
+        type: "Masalsi foto",
+        price: "Dis alan ucretsiz",
+        note: "Heroes' Square ve City Park ile ayni bolge. Hamamsiz planda en kolay eklenen viral durak.",
+        mapQuery: "Vajdahunyad Castle Budapest"
+      },
+      {
+        city: "budapest",
+        title: "Liberty Bridge",
+        lat: 47.4857237,
+        lng: 19.0549035,
+        type: "Sabah foto",
+        price: "Ucretsiz",
+        note: "Kelenfold varisindan sonra Gellert tarafina gecerken sabah bos yakalarsiniz.",
+        mapQuery: "Liberty Bridge Budapest"
+      },
+      {
+        city: "budapest",
+        title: "Gellert Hill",
+        lat: 47.486916,
+        lng: 19.044562,
+        type: "Manzara",
+        price: "Ucretsiz",
+        note: "Erken saat enerjiniz varsa Buda tarafinda guzel panorama. Tek gun planinda yorgunluk yaratabilir.",
+        mapQuery: "Gellert Hill Budapest"
+      }
+    ];
+
+    const cards = document.getElementById("cards");
+    const tiktokCards = document.getElementById("tiktokCards");
+    const map = L.map("map", { scrollWheelZoom: true }).setView([49.2, 16.7], 6);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "&copy; OpenStreetMap"
+    }).addTo(map);
+
+    const markers = [];
+
+    function routeLink(place, mode) {
+      const origin = origins[place.city].query;
+      const destination = place.mapQuery;
+      return "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(origin) +
+        "&destination=" + encodeURIComponent(destination) +
+        "&travelmode=" + encodeURIComponent(mode);
+    }
+
+    function markerIcon(city) {
+      const color = city === "prague" ? "#b04531" : "#1e6f78";
+      return L.divIcon({
+        className: "",
+        html: `<div style="width:18px;height:18px;border-radius:50%;background:${color};border:3px solid white;box-shadow:0 2px 10px rgba(0,0,0,.32)"></div>`,
+        iconSize: [18, 18],
+        iconAnchor: [9, 9]
+      });
+    }
+
+    function homeIcon() {
+      return L.divIcon({
+        className: "",
+        html: "<div style='width:22px;height:22px;border-radius:6px;background:#1d2528;border:3px solid white;box-shadow:0 2px 10px rgba(0,0,0,.32)'></div>",
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      });
+    }
+
+    function tiktokIcon(city) {
+      const border = city === "prague" ? "#b04531" : "#1e6f78";
+      return L.divIcon({
+        className: "",
+        html: `<div style="width:18px;height:18px;border-radius:5px;background:#111719;border:3px solid ${border};box-shadow:0 2px 10px rgba(0,0,0,.32)"></div>`,
+        iconSize: [18, 18],
+        iconAnchor: [9, 9]
+      });
+    }
+
+    Object.values(origins).forEach(origin => {
+      const marker = L.marker([origin.lat, origin.lng], { icon: homeIcon() })
+        .bindPopup(`<strong>${origin.name}</strong>`)
+        .addTo(map);
+      markers.push({ city: origin.name.includes("Prag") ? "prague" : "budapest", marker, home: true });
+    });
+
+    places.forEach((place, index) => {
+      const article = document.createElement("article");
+      article.className = "card";
+      article.dataset.city = place.city;
+      article.innerHTML = `
+        <img src="${place.image}" alt="${place.title}" loading="lazy">
+        <div class="card-body">
+          <div class="card-head">
+            <h2>${place.title}</h2>
+            <span class="tag ${place.city}">${place.city === "prague" ? "Prag" : "Budapeste"}</span>
+          </div>
+          <p class="desc">${place.note}</p>
+          <div class="meta">
+            <div><span class="label">Uzaklik</span><span class="value">${place.distance}</span></div>
+            <div><span class="label">Yuruyerek</span><span class="value">${place.walk}</span></div>
+            <div><span class="label">Toplu tasima</span><span class="value">${place.transit}</span></div>
+            <div><span class="label">Fiyat</span><span class="value">${place.price}</span></div>
+          </div>
+          <div class="links">
+            <a href="${routeLink(place, "walking")}" target="_blank" rel="noreferrer">Yurume rotasi</a>
+            <a href="${routeLink(place, "transit")}" target="_blank" rel="noreferrer">Toplu tasima</a>
+          </div>
+        </div>
+      `;
+      cards.appendChild(article);
+
+      const marker = L.marker([place.lat, place.lng], { icon: markerIcon(place.city) })
+        .bindPopup(`<strong>${place.title}</strong><br>${place.price}<br>${place.distance} / ${place.walk}`)
+        .addTo(map);
+      marker.on("click", () => {
+        document.querySelectorAll(".card").forEach(card => card.style.outline = "none");
+        article.style.outline = "3px solid rgba(40,63,143,.32)";
+        article.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      markers.push({ city: place.city, marker, home: false, index });
+    });
+
+    tiktokPlaces.forEach(place => {
+      const article = document.createElement("article");
+      article.className = "tiktok-card";
+      article.dataset.city = place.city;
+      article.innerHTML = `
+        <span class="mini-tag">${place.city === "prague" ? "Prag" : "Budapeste"} / ${place.type}</span>
+        <h3>${place.title}</h3>
+        <p>${place.note}</p>
+        <p><strong>${place.price}</strong></p>
+        <a href="${routeLink(place, "walking")}" target="_blank" rel="noreferrer">Haritada ac</a>
+      `;
+      tiktokCards.appendChild(article);
+
+      const marker = L.marker([place.lat, place.lng], { icon: tiktokIcon(place.city) })
+        .bindPopup(`<strong>${place.title}</strong><br>TikTok'takiler<br>${place.price}`)
+        .addTo(map);
+      markers.push({ city: place.city, marker, home: false, tiktok: true });
+    });
+
+    const bounds = L.latLngBounds(markers.map(item => item.marker.getLatLng()));
+    map.fitBounds(bounds, { padding: [28, 28] });
+
+    document.querySelectorAll("button[data-filter]").forEach(button => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+        document.querySelectorAll("button[data-filter]").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+
+        document.querySelectorAll(".card").forEach(card => {
+          card.classList.toggle("hidden", filter !== "all" && card.dataset.city !== filter);
+        });
+
+        document.querySelectorAll(".tiktok-card").forEach(card => {
+          card.classList.toggle("hidden", filter !== "all" && card.dataset.city !== filter);
+        });
+
+        const visibleMarkers = [];
+        markers.forEach(item => {
+          const visible = filter === "all" || item.city === filter;
+          if (visible) {
+            item.marker.addTo(map);
+            visibleMarkers.push(item.marker.getLatLng());
+          } else {
+            item.marker.remove();
+          }
+        });
+
+        if (visibleMarkers.length) {
+          map.fitBounds(L.latLngBounds(visibleMarkers), { padding: [28, 28] });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
